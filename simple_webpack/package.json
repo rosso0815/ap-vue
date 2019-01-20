@@ -2,7 +2,7 @@
   "name": "simple_webpack",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "pfistera <rosso0815@gmail.com>",
+  "author": "rosso0815",
   "license": "MIT",
   "private": true,
   "scripts": {

@@ -3,15 +3,14 @@
 
 import Router from "vue-router"
 import PageHome from './components/PageHome.vue'
-
-//const Home = { template: "<div>Home</div>" }
-const Foo = { template: "<div>foo</div>" }
-const Bar = { template: "<div>bar</div>" }
+import PageBar from './components/PageBar.vue'
+import PageFoo from './components/PageFoo.vue'
 
 const routes = [
   { path: "/", component: PageHome },
-  { path: "/foo", component: Foo },
-  { path: "/bar", component: Bar }
+  { path: "/PageHome", component: PageHome },
+  { path: "/PageFoo", component: PageFoo },
+  { path: "/PageBar", component: PageBar }
 ];
 
 export default new Router({

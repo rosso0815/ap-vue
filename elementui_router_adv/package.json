@@ -2,7 +2,7 @@
   "name": "elementui_router_adv",
   "description": "A Vue.js project",
   "version": "1.0.0",
-  "author": "pfistera <rosso0815@gmail.com>",
+  "author": "rosso0815",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -10,7 +10,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "element-ui": "^2.4.11",
+    "url-loader": "^1.1.2",
     "vue": "^2.5.11",
     "vue-router": "^3.0.2"
   },
