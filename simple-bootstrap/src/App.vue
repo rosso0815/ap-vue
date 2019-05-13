@@ -1,12 +1,18 @@
 <template>
   <div id="app">
-    <router-view/>
+    <HelloWorld msg="Welcome to Your Vue.js App of PFISTERA1"/>
+    <HelloWorld msg="Welcome to Your Vue.js App of PFISTERA2"/>
   </div>
 </template>
 
 <script>
+import HelloWorld from './components/HelloWorld.vue'
+
 export default {
-  name: 'App'
+  name: 'app',
+  components: {
+    HelloWorld
+  }
 }
 </script>
 

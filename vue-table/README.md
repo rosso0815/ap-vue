@@ -1,4 +1,4 @@
-# simple-bootstrap
+# vue-table
 
 ## Project setup
 ```
