@@ -1,13 +1,13 @@
 
 Vue.component('MyInput', {
 
-  created() {
+  created () {
     console.log('MyInput created')
     this.message = this.msg
   },
 
   props: ['msg'],
-  
+
   data: function () {
     return {
       message:'',
@@ -22,8 +22,6 @@ Vue.component('MyInput', {
       return this.message.split('').reverse().join('')
     },
   },
-
-
   template: `
   <div>
     <h5>MyInput for message: {{message}} , msg: {{msg}}</h5><br>

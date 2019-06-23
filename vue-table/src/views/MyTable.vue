@@ -1,24 +1,103 @@
-/* eslint-disable no-alert */
+
+<script>
+// @ is an alias to /src
+
+import axios from 'axios'
+
+export default {
+  name: 'myTable',
+  data () {
+    return {
+      info: '<pls define>',
+      items: [],
+      fields: [
+        { key: 'Id', label: 'Id', sortable: true },
+        { key: 'userId', label: 'UserId', sortable: true },
+        { key: 'title', label: 'Title', sortable: true },
+        { key: 'body', label: 'Body' }
+      ],
+      totalRows: 100,
+      currentPage: 1,
+      perPage: 5,
+      pageOptions: [5, 10, 15],
+      sortBy: null,
+      sortDesc: false,
+      sortDirection: 'asc',
+      filter: null,
+      status: '',
+      sortOptions: '',
+      selected: [],
+      boxOne: '',
+      boxTwo: ''
+    }
+  },
+  created () {
+    axios
+      .get('data.json')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        console.log('load data')
+        this.items = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+  },
+  methods: {
+    rowSelected (items) {
+      this.selected = items
+    },
+
+    showDialog () {
+      console.log('showDialog')
+    },
+
+    edit () {
+      console.log('@@@ edit modal')
+      this.$bvModal.show('modal-1')
+    },
+    clone () {
+      console.log('@@@ clone modal')
+      // this.$bvModal.show("modal-1");
+    },
+    toDelete () {
+      console.log('@@@ toDelete modal selected=' + this.selected)
+
+      if (this.selected === null || this.selected.length < 1) {
+        this.$bvModal.msgBoxOk('pls select a row')
+      } else {
+        this.$bvModal.msgBoxOk('selected row will be deleted')
+      }
+    }
+  }
+}
+</script>
 
 <template>
-  <div class="container-fluid">
-    <b-modal id="modal-1" title="BootstrapVue">
-      <p class="my-4">Hello from modal!</p>
-      <b-form-checkbox
-        id="checkbox-1"
-        v-model="status"
-        name="checkbox-1"
-        value="accepted"
-        unchecked-value="not_accepted"
-      >I accept the terms and use</b-form-checkbox>
+  <div class="fluid">
+    <b-modal id="modal-delete" title="Delete Entry" cancel-disabled  >
+      <p class="my-4">Delete entry id</p>
     </b-modal>
 
+    <b-modal id="modal-1" title="BootstrapVue" @show="showDialog">
+      <b-card>
+        <b-tabs content-class="mt-3">
+          <b-tab title="First" active>
+            <p>I'm the first tab</p>
+          </b-tab>
+          <b-tab title="Second">
+            <p>I'm the second tab</p>
+          </b-tab>
+          <b-tab title="Disabled">
+            <p>I'm a disabled tab!</p>
+          </b-tab>
+        </b-tabs>
+      </b-card>
+    </b-modal>
+    <!-- User Interface controls -->
     <b-row>
-      <b-col>
-        <b-button v-b-modal.modal-1>Launch demo modal</b-button>
-      </b-col>
-      <b-col>
-        <b-form-group label-cols-sm="3" label="Filter" class="mb-0">
+      <b-col md="2" class="my-2">
+        <b-form-group label-cols-sm="3" label="Search" class="mb-0">
           <b-input-group>
             <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
             <b-input-group-append>
@@ -27,21 +106,20 @@
           </b-input-group>
         </b-form-group>
       </b-col>
-      <b-col>
-        <b-form-group label-cols-sm="3" label="Sort direction" class="mb-0">
-          <b-input-group>
-            <b-form-select v-model="sortDirection" slot="append">
-              <option value="asc">Asc</option>
-              <option value="desc">Desc</option>
-              <option value="last">Last</option>
-            </b-form-select>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-      <b-col>
+
+      <b-col md="2" class="my-2">
         <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
           <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
         </b-form-group>
+      </b-col>
+
+      <b-col md="2" class="my-2">
+        <b-button-toolbar>
+          <b-button>Detail</b-button>
+          <b-button v-on:click="edit">Edit</b-button>
+          <b-button v-on:click="clone">Clone</b-button>
+          <b-button v-on:click="toDelete">Delete</b-button>
+        </b-button-toolbar>
       </b-col>
     </b-row>
 
@@ -50,34 +128,26 @@
       bordered
       striped
       hover
+      selectable
       :fields="fields"
       :items="items"
       :current-page="currentPage"
       :per-page="perPage"
       :filter="filter"
+      select-mode="single"
+      @row-selected="rowSelected"
     >
-      <template slot="actions" slot-scope="row">
-        <b-button>
+      <template slot="actions">
+        <b-button class="fullwidth">
           <font-awesome-icon icon="info"/>
         </b-button>
 
-        <b-button>
+        <b-button class="fullwidth">
           <font-awesome-icon icon="edit"/>
         </b-button>
-        <b-button>
+        <b-button class="fullwidth">
           <font-awesome-icon icon="trash"/>
         </b-button>
-        <!--
-        <b-button
-          size="sm"
-          @click="info(row.item, row.index, $event.target)"
-          class="mr-1"
-        >Info modal</b-button>
-        <b-button
-          size="sm"
-          @click="row.toggleDetails"
-        >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
-        -->
       </template>
     </b-table>
 
@@ -91,48 +161,23 @@
         ></b-pagination>
       </b-col>
     </b-row>
+
+    <b-row>
+      <b-col md="6">info {{info}}</b-col>
+      <b-col md="6">selected {{selected}}</b-col>
+    </b-row>
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
+<style>
+.fullwidth {
+  /*padding:0;
+  width:100%;
+  display:inline-block;*/
+}
 
-import axios from "axios";
-
-export default {
-  name: "myTable",
-  data() {
-    return {
-      items: [],
-      fields: [
-        { key: "userId", label: "Id", sortable: true },
-        { key: "title", label: "Title", sortable: true },
-        { key: "body", label: "Body" },
-        { key: "actions", label: "" }
-      ],
-      totalRows: 100,
-      currentPage: 1,
-      perPage: 5,
-      pageOptions: [5, 10, 15],
-      sortBy: null,
-      sortDesc: false,
-      sortDirection: "asc",
-      filter: null,
-      status: "",
-      sortOptions: ""
-    };
-  },
-  created() {
-    axios
-      .get(`data.json`)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        console.log("load data");
-        this.items = response.data;
-      })
-      .catch(e => {
-        this.errors.push(e);
-      });
-  }
-};
-</script>
+.nameOfTheClass {
+  /* padding: 2px !important; */
+  /* background-color: coral; */
+}
+</style>

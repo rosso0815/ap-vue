@@ -5,10 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    count: 0
   },
   mutations: {
-
+    increment (state) {
+      console.log('@@@ state inc')
+      state.count++
+    }
   },
   actions: {
 

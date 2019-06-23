@@ -1,4 +1,6 @@
+
 <template>
+
   <div>
     <b-navbar toggleable="lg" type="dark" variant="dark" fixed="top" :sticky="true">
       <b-navbar-brand href="#/home">Timesheet</b-navbar-brand>
@@ -10,13 +12,18 @@
     </b-navbar>
     <br>
   </div>
+
 </template>
 
 <script>
 export default {
-  name: "myMenu",
+  name: 'myMenu',
   props: {
     msg: String
   }
-};
+}
 </script>
+
+<style>
+
+</style>
