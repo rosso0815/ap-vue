@@ -116,9 +116,9 @@ export default {
       <b-col md="2" class="my-2">
         <b-button-toolbar>
           <b-button>Detail</b-button>
-          <b-button v-on:click="edit">Edit</b-button>
-          <b-button v-on:click="clone">Clone</b-button>
-          <b-button v-on:click="toDelete">Delete</b-button>
+          <b-button v-on:click="edit" class="mx-1" >Edit</b-button>
+          <b-button v-on:click="clone" class="mx-1" >Clone</b-button>
+          <b-button v-on:click="toDelete" class="mx-1" >Delete</b-button>
         </b-button-toolbar>
       </b-col>
     </b-row>
