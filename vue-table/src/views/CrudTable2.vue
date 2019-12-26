@@ -1,23 +1,56 @@
+<template>
+  <div>
+    <CrudTable
+      v-bind:title="title"
+      :items="items"
+      v-bind:fields="fields"
+      >
+
+      <template v-slot:header>
+        <h1>{{title}}</h1>
+      </template>
+
+      <template v-slot:header2>
+        <h1>{{title}}</h1>
+      </template>
+
+      <template v-bind:user="title" v-slot:cell(title)="data">
+        Data
+      </template>
+
+      <template v-slot:cell(userid)="row">
+        userid={{ row.item.userid }}
+      </template>
+
+    </CrudTable>
+  </div>
+</template>
 
 <script>
-// @ is an alias to /src
-
-import axios from 'axios'
-import CompTable from '@/components/CompTable.vue'
+// import axios from 'axios'
+import CrudTable from '@/components/CrudTable.vue'
 
 export default {
-  name: 'myTable',
+  name: 'CrudTable2',
   components: {
-    CompTable
+    CrudTable
   },
   data () {
     return {
       debugOn: true,
-      info: '<pls define>',
-      items: [],
+      title: 'CRUDTable2',
+      // filter: null,
+      items: [
+        { 'id': '1', 'userid': '1', 'title': 'title 1', 'body': 'body 1' },
+        { 'id': '2', 'userid': '2', 'title': 'title 2', 'body': 'body 2' },
+        { 'id': '3', 'userid': '3', 'title': 'title 3', 'body': 'body 3' },
+        { 'id': '4', 'userid': '4', 'title': 'title 4', 'body': 'body 4' },
+        { 'id': '5', 'userid': '5', 'title': 'title 5', 'body': 'body 5' },
+        { 'id': '6', 'userid': '6', 'title': 'title 6', 'body': 'body 6' }
+      ],
       fields: [
         { key: 'id', label: 'Id', sortable: true },
-        { key: 'userId', label: 'UserId', sortable: true },
+        { key: 'userid', label: 'UserId', sortable: true },
         { key: 'title', label: 'Title', sortable: true },
         { key: 'body', label: 'Body' }
       ],
@@ -37,19 +70,19 @@ export default {
     }
   },
   created () {
-    axios
-      .get('data.json')
-      .then(response => {
-        // JSON responses are automatically parsed.
-        console.log('load data')
-        this.items = response.data
-      })
-      .catch(e => {
-        this.errors.push(e)
-      })
+    console.log('@@@ CrudTable2 created')
+    // axios
+    //   .get('data.json')
+    //   .then(response => {
+    //     // JSON responses are automatically parsed.
+    //     console.log('load data')
+    //     this.items = response.data
+    //   })
+    //   .catch(e => {
+    //     this.errors.push(e)
+    //   })
   },
   methods: {
-
     log (text) {
       console.log('log +> ' + text)
     },
@@ -67,14 +100,6 @@ export default {
 
     showDetail () {
       console.log('@@@ showDetail')
-      // var t = this.selected
-      // t.body = 'gugusseli'
-      // this.items.splice(1, 1, t)
-      // var t = this.selected
-      // var a = this.items
-      // t.body = 'gugusseli'
-      // a.splice(1, 1, t)
-      // this.items = a
     },
 
     showDialog () {
@@ -106,18 +131,3 @@ export default {
   }
 }
 </script>
-
-<template>
-  <div>
-
-    <comp-table
-      title="Crud Table"
-    />
-
-  <div v-if="debugOn == true">
-    <b>debugOn</b>
-
-  </div>
-
-  </div>
-</template>

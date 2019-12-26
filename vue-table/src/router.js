@@ -2,34 +2,46 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import MyHome from './views/MyHome.vue'
-import MyTable from './views/MyTable.vue'
-import MyAbout from './views/MyAbout.vue'
+import MyHome from '@/views/MyHome.vue'
+import CrudTable1 from '@/views/CrudTable1.vue'
+import CrudTable2 from '@/views/CrudTable2.vue'
+import MyAbout from '@/views/MyAbout.vue'
+import playPage1 from '@/views/playPage1.vue'
+import playPage2 from '@/views/playPage2.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: MyHome
     },
     {
-      path: '/tableList',
-      name: 'mytable',
-      component: MyTable
+      path: '/crudtable1',
+      name: 'crudtable1',
+      component: CrudTable1
+    },
+    {
+      path: '/crudtable2',
+      name: 'crudtable2',
+      component: CrudTable2
     },
     {
       path: '/about',
       name: 'about',
       component: MyAbout
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // component: function () {
-      //  return import(/* webpackChunkName: "about" */ './views/MyAbout.vue')
-      // }
+    },
+    {
+      path: '/playPage1',
+      name: 'playPage1',
+      component: playPage1
+    },
+    {
+      path: '/playPage2',
+      name: 'playPage2',
+      component: playPage2
     }
   ]
 })

@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     <HelloWorld msg="HomeDialog"/>
+    <ButtonCounter></ButtonCounter>
     count = {{ count }}
     <div class="mouse">
       <a v-on:mouseover="mouseover" v-on:mouseleave="mouseleave">{{message}}</a>
@@ -38,11 +39,13 @@
 // import store from './store'
 
 import HelloWorld from '@/components/HomeDialog.vue'
+import ButtonCounter from '@/components/ButtonCounter.vue'
 
 export default {
   name: 'MyHome',
   components: {
-    HelloWorld
+    HelloWorld,
+    ButtonCounter
   },
   data () {
     return {
