@@ -1,4 +1,3 @@
-
 <script>
 // @ is an alias to /src
 
@@ -61,9 +60,9 @@ export default {
     rowSelected (selected) {
       console.log(
         '@@@ selected = ' +
-          selected[0].id +
-          'showDetail=' +
-          selected[0]._showDetails
+                    selected[0].id +
+                    'showDetail=' +
+                    selected[0]._showDetails
       )
 
       if (selected[0]._showDetails === true) {
@@ -117,122 +116,133 @@ export default {
 </script>
 
 <template>
-  <div class="fluid">
-    <h3>Title : {{title}}</h3>
-    <br />
-    <b-modal id="modal-delete" title="Delete Entry" cancel-disabled>
-      <p class="my-4">Delete entry id</p>
-    </b-modal>
+    <div class="fluid">
+        <h3>Title : {{ title }}</h3>
+        <br />
+        <b-modal id="modal-delete" title="Delete Entry" cancel-disabled>
+            <p class="my-4">Delete entry id</p>
+        </b-modal>
 
-    <b-modal id="modal-1" title="BootstrapVue" @show="showDialog">
-      <b-card>
-        <b-tabs content-class="mt-3">
-          <b-tab title="First" active>
-            <p>I'm the first tab</p>
-          </b-tab>
-          <b-tab title="Second">
-            <p>I'm the second tab</p>
-          </b-tab>
-          <b-tab title="Disabled">
-            <p>I'm a disabled tab!</p>
-          </b-tab>
-        </b-tabs>
-      </b-card>
-    </b-modal>
-    <!-- User Interface controls -->
-    <b-row>
-      <b-col md="2" class="my-2">
-        <b-form-group label-cols-sm="3" label="Search" class="mb-0">
-          <b-input-group>
-            <b-form-input v-model="filter" placeholder="Type to Search"></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-
-      <b-col md="2" class="my-2">
-        <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
-          <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
-        </b-form-group>
-      </b-col>
-
-      <b-col md="8" class="my-2">
-        <b-button-toolbar>
-          <b-button @click="showDetail">Detail</b-button>
-          <b-button v-on:click="edit" class="mx-1">Edit</b-button>
-          <b-button v-on:click="clone" class="mx-1">Clone</b-button>
-          <b-button v-on:click="toDelete" class="mx-1">Delete</b-button>
-        </b-button-toolbar>
-      </b-col>
-    </b-row>
-
-    <b-table
-      bordered
-      striped
-      hover
-      selectable
-      :fields="fields"
-      :items="items"
-      :current-page="currentPage"
-      :per-page="perPage"
-      select-mode="single"
-      @row-selected="rowSelected"
-      :filter="filter"
-      :filter-function="filterGrid"
-      responsive="sm"
-    >
-      <template slot="row-details" slot-scope="row">
-        <b-card>
-          <b-row class="mb-2">
-            <b-col sm="3" class="text-sm-right">
-              <b>Age:</b>
+        <b-modal id="modal-1" title="BootstrapVue" @show="showDialog">
+            <b-card>
+                <b-tabs content-class="mt-3">
+                    <b-tab title="First" active>
+                        <p>I'm the first tab</p>
+                    </b-tab>
+                    <b-tab title="Second">
+                        <p>I'm the second tab</p>
+                    </b-tab>
+                    <b-tab title="Disabled">
+                        <p>I'm a disabled tab!</p>
+                    </b-tab>
+                </b-tabs>
+            </b-card>
+        </b-modal>
+        <!-- User Interface controls -->
+        <b-row>
+            <b-col md="2" class="my-2">
+                <b-form-group label-cols-sm="3" label="Search" class="mb-0">
+                    <b-input-group>
+                        <b-form-input
+                            v-model="filter"
+                            placeholder="Type to Search"
+                        ></b-form-input>
+                        <b-input-group-append>
+                            <b-button :disabled="!filter" @click="filter = ''"
+                                >Clear</b-button
+                            >
+                        </b-input-group-append>
+                    </b-input-group>
+                </b-form-group>
             </b-col>
-            <b-col>{{ row.item.age }}</b-col>
-          </b-row>
 
-          <b-row class="mb-2">
-            <b-col sm="3" class="text-sm-right">
-              <b>Is Active:</b>
+            <b-col md="2" class="my-2">
+                <b-form-group label-cols-sm="3" label="Per page" class="mb-0">
+                    <b-form-select
+                        v-model="perPage"
+                        :options="pageOptions"
+                    ></b-form-select>
+                </b-form-group>
             </b-col>
-            <b-col>{{ row.item.isActive }}</b-col>
-          </b-row>
 
-          <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
-        </b-card>
-      </template>
-      <template slot="actions">
-        <b-button class="fullwidth">
-          <font-awesome-icon icon="info" />
-        </b-button>
+            <b-col md="8" class="my-2">
+                <b-button-toolbar>
+                    <b-button @click="showDetail">Detail</b-button>
+                    <b-button v-on:click="edit" class="mx-1">Edit</b-button>
+                    <b-button v-on:click="clone" class="mx-1">Clone</b-button>
+                    <b-button v-on:click="toDelete" class="mx-1"
+                        >Delete</b-button
+                    >
+                </b-button-toolbar>
+            </b-col>
+        </b-row>
 
-        <b-button class="fullwidth">
-          <font-awesome-icon icon="edit" />
-        </b-button>
-        <b-button class="fullwidth">
-          <font-awesome-icon icon="trash" />
-        </b-button>
-      </template>
-    </b-table>
+        <b-table
+            bordered
+            striped
+            hover
+            selectable
+            :fields="fields"
+            :items="items"
+            :current-page="currentPage"
+            :per-page="perPage"
+            select-mode="single"
+            @row-selected="rowSelected"
+            :filter="filter"
+            :filter-function="filterGrid"
+            responsive="sm"
+        >
+            <template slot="row-details" slot-scope="row">
+                <b-card>
+                    <b-row class="mb-2">
+                        <b-col sm="3" class="text-sm-right">
+                            <b>Age:</b>
+                        </b-col>
+                        <b-col>{{ row.item.age }}</b-col>
+                    </b-row>
 
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          class="my-0"
-        ></b-pagination>
-      </b-col>
-    </b-row>
+                    <b-row class="mb-2">
+                        <b-col sm="3" class="text-sm-right">
+                            <b>Is Active:</b>
+                        </b-col>
+                        <b-col>{{ row.item.isActive }}</b-col>
+                    </b-row>
 
-    <b-row>
-      <b-col md="6">info {{info}}</b-col>
-      <b-col md="6">selected {{selected}}</b-col>
-    </b-row>
-  </div>
+                    <b-button size="sm" @click="row.toggleDetails"
+                        >Hide Details</b-button
+                    >
+                </b-card>
+            </template>
+            <template slot="actions">
+                <b-button class="fullwidth">
+                    <font-awesome-icon icon="info" />
+                </b-button>
+
+                <b-button class="fullwidth">
+                    <font-awesome-icon icon="edit" />
+                </b-button>
+                <b-button class="fullwidth">
+                    <font-awesome-icon icon="trash" />
+                </b-button>
+            </template>
+        </b-table>
+
+        <b-row>
+            <b-col md="6" class="my-1">
+                <b-pagination
+                    v-model="currentPage"
+                    :total-rows="totalRows"
+                    :per-page="perPage"
+                    class="my-0"
+                ></b-pagination>
+            </b-col>
+        </b-row>
+
+        <b-row>
+            <b-col md="6">info {{ info }}</b-col>
+            <b-col md="6">selected {{ selected }}</b-col>
+        </b-row>
+    </div>
 </template>
 
-<style>
-</style>
+<style></style>

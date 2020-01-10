@@ -7,8 +7,10 @@
         <b-nav-item href="#/about">About</b-nav-item>
         <b-nav-item href="#/crudtable1">Crud-Table 1</b-nav-item>
         <b-nav-item href="#/crudtable2">Crud-Table 2</b-nav-item>
+        <b-nav-item href="#/crudtable3">Crud-Table 3</b-nav-item>
         <b-nav-item href="#/playPage1">playPage1</b-nav-item>
         <b-nav-item href="#/playPage2">playPage2</b-nav-item>
+
         <!-- Navbar dropdowns -->
         <!--
           <b-nav-item-dropdown text="Lang" right>

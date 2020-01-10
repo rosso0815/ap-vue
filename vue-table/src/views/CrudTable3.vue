@@ -4,16 +4,14 @@
       v-bind:title="title"
       v-bind:items="items"
       v-bind:fields="fields"
-      v-bind:actions="actions"
-      v-on:action1="action1"
-      v-on:action2="action2"
-    >
+      >
+
       <template v-slot:header>
-        <h1>{{ title }}</h1>
+        <h1>{{title}}</h1>
       </template>
 
       <template v-slot:header2>
-        <h1>{{ title }}</h1>
+        <h1>{{title}}</h1>
       </template>
 
       <template v-bind:user="title" v-slot:cell(title)="data">
@@ -23,11 +21,13 @@
       <template v-slot:cell(userid)="row">
         userid={{ row.item.userid }}
       </template>
+
     </CrudTable>
   </div>
 </template>
 
 <script>
+// import axios from 'axios'
 import CrudTable from '@/components/CrudTable.vue'
 
 export default {
@@ -38,48 +38,15 @@ export default {
   data () {
     return {
       debugOn: true,
-      title: 'CRUDTable2',
-      actions: [
-        { title: 'Action 1', action: 'action1' },
-        { title: 'Action 2', action: 'action2' }
-      ],
+      title: 'CRUDTable3',
+      // filter: null,
       items: [
-        {
-          id: '1',
-          userid: '1',
-          title: 'title 1',
-          body: 'body 1'
-        },
-        {
-          id: '2',
-          userid: '2',
-          title: 'title 2',
-          body: 'body 2'
-        },
-        {
-          id: '3',
-          userid: '3',
-          title: 'title 3',
-          body: 'body 3'
-        },
-        {
-          id: '4',
-          userid: '4',
-          title: 'title 4',
-          body: 'body 4'
-        },
-        {
-          id: '5',
-          userid: '5',
-          title: 'title 5',
-          body: 'body 5'
-        },
-        {
-          id: '6',
-          userid: '6',
-          title: 'title 6',
-          body: 'body 6'
-        }
+        { 'id': '1', 'userid': '1', 'title': 'title 1', 'body': 'body 1' },
+        { 'id': '2', 'userid': '2', 'title': 'title 2', 'body': 'body 2' },
+        { 'id': '3', 'userid': '3', 'title': 'title 3', 'body': 'body 3' },
+        { 'id': '4', 'userid': '4', 'title': 'title 4', 'body': 'body 4' },
+        { 'id': '5', 'userid': '5', 'title': 'title 5', 'body': 'body 5' },
+        { 'id': '6', 'userid': '6', 'title': 'title 6', 'body': 'body 6' }
       ],
       fields: [
         { key: 'id', label: 'Id', sortable: true },
@@ -120,14 +87,6 @@ export default {
       console.log('log +> ' + text)
     },
 
-    action1 (e) {
-      console.log('action1 e=' + e)
-    },
-
-    action2 (e) {
-      console.log('action2')
-    },
-
     filterGrid (val1, val2) {
       console.log('@@@ filterGrid val1=' + val1 + ' , val2=' + val2)
       return true
@@ -155,7 +114,6 @@ export default {
       console.log('@@@ clone modal')
       // this.$bvModal.show("modal-1");
     },
-
     toDelete () {
       console.log('@@@ toDelete modal selected=' + this.selected)
 

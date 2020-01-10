@@ -1,49 +1,81 @@
 <template>
   <div>
-    <b-table 
-      <!-- v-bind="$attrs" 
-      v-on="$listeners"  -->
-      per-page="5">
+    <h3>{{ title }}</h3>
 
+    <b-form-select
+      v-model="perPage"
+      id="perPageSelect"
+      :size="size"
+      :options="pageOptions"
+    />
+
+    <span v-for="action in actions">
+      <b-button
+        v-on:click="$emit(action.action, 'button clicked')"
+        :size="size"
+        :class="style_button"
+      >
+        {{ action.title }}
+        {{ action.action }}
+      </b-button>
+    </span>
+
+    <b-table
+      selectable
+      select-mode="single"
+      :per-page="perPage"
+      :items="items"
+      :fields="fields"
+      :size="size"
+    >
       <!-- Pass on all named slots -->
       <slot v-for="slot in Object.keys($slots)" :name="slot" :slot="slot" />
 
       <!-- Pass on all scoped slots -->
-      <template v-for="slot in Object.keys($scopedSlots)" :slot="slot" slot-scope="scope">
-
+      <template
+        v-for="slot in Object.keys($scopedSlots)"
+        :slot="slot"
+        slot-scope="scope"
+      >
         <slot :name="slot" v-bind="scope" />
       </template>
     </b-table>
     <br />
-    <h3>DEBUG</h3>
-    <span v-for="attr in Object.keys($attrs)">
-      attr={{attr}}
-      <br />
-    </span>
-    <span v-for="slot in Object.keys($slots)">
-      slot={{slot}}
-      <br />
-    </span>
-    <span v-for="slot in Object.keys($scopedSlots)">
-      scopedSlot={{slot}}
-      <br />
-    </span>
+
+    <div v-if="debugOn">
+      <h3>DEBUG</h3>
+      <span v-for="attr in Object.keys($attrs)">
+        attr={{ attr }}
+        <br />
+      </span>
+      <span v-for="slot in Object.keys($slots)">
+        slot={{ slot }}
+        <br />
+      </span>
+      <span v-for="slot in Object.keys($scopedSlots)">
+        scopedSlot={{ slot }}
+        <br />
+      </span>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'CrudTable',
-  props: {},
+  name: 'crud-table',
+  props: ['title', 'items', 'fields', 'actions'],
 
-  data () {
+  data() {
     return {
+      debugOn: true,
       info: '<pls define>',
+      size: 'sm',
+      style_button: 'mt-1 mb-1 mr-1',
       filter: null,
       totalRows: 100,
       currentPage: 1,
       perPage: 5,
-      pageOptions: [5, 10, 15],
+      pageOptions: [1, 2, 5, 10, 25],
       sortBy: null,
       sortDesc: false,
       sortDirection: 'asc',
@@ -52,11 +84,12 @@ export default {
       selected: [],
       boxOne: '',
       boxTwo: '',
-      items: [{ id: '1', userid: '1', title: 'title 1', body: 'body 1' }]
+      // items: [{ id: '1', userid: '1', title: 'title 1', body: 'body 1' }]
     }
   },
-  created () {
+  created() {
     console.debug('@@@ CrudTable -> created ')
+
     // see https://vuejs.org/v2/api/#vm-attrs
     console.debug('attrs typeof=', typeof this.$attrs) // object
 
@@ -67,25 +100,30 @@ export default {
     //  console.log('slotobject=' + slot)
     // }
   },
-  mounted () {
+  mounted() {
     console.log('@@@ CrudTable -> mounted ')
   },
   methods: {
-    log (text) {
+    log(text) {
       console.log('log +> ' + text)
     },
 
-    filterGrid (val1, val2) {
+    sendAction1() {
+      console.log('sendAction1')
+      this.$emit('action1', 'action1')
+    },
+
+    filterGrid(val1, val2) {
       console.log('@@@ filterGrid val1=' + val1 + ' , val2=' + val2)
       return true
     },
 
-    rowSelected (selected) {
+    rowSelected(selected) {
       console.log(
         '@@@ selected = ' +
           selected[0].id +
           'showDetail=' +
-          selected[0]._showDetails
+          selected[0]._showDetails,
       )
 
       if (selected[0]._showDetails === true) {
@@ -96,7 +134,7 @@ export default {
       // this.selected = selected
     },
 
-    showDetail () {
+    showDetail() {
       console.log('@@@ showDetail')
       // var t = this.selected
       // t.body = 'gugusseli'
@@ -108,19 +146,19 @@ export default {
       // this.items = a
     },
 
-    showDialog () {
+    showDialog() {
       console.log('showDialog')
     },
 
-    edit () {
+    edit() {
       console.log('@@@ edit modal')
       this.$bvModal.show('modal-1')
     },
-    clone () {
+    clone() {
       console.log('@@@ clone modal')
       // this.$bvModal.show("modal-1");
     },
-    toDelete () {
+    toDelete() {
       console.log('@@@ toDelete modal selected=' + this.selected)
 
       if (this.selected === null || this.selected.length < 1) {
@@ -128,15 +166,17 @@ export default {
       } else {
         this.$bvModal.msgBoxOk('selected row will be deleted')
       }
-    }
+    },
   },
+
   watch: {
-    filter: function (value) {
+    filter: function(value) {
       console.log('@@@ filter ' + value)
     },
-    $attrs: function (value) {
+
+    $attrs: function(value) {
       console.log('@@@ watch $attrs ' + value)
-    }
-  }
+    },
+  },
 }
 </script>

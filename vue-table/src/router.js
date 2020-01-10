@@ -5,6 +5,7 @@ import Router from 'vue-router'
 import MyHome from '@/views/MyHome.vue'
 import CrudTable1 from '@/views/CrudTable1.vue'
 import CrudTable2 from '@/views/CrudTable2.vue'
+import CrudTable3 from '@/views/CrudTable3.vue'
 import MyAbout from '@/views/MyAbout.vue'
 import playPage1 from '@/views/playPage1.vue'
 import playPage2 from '@/views/playPage2.vue'
@@ -27,6 +28,11 @@ export default new Router({
       path: '/crudtable2',
       name: 'crudtable2',
       component: CrudTable2
+    },
+    {
+      path: '/crudtable3',
+      name: 'crudtable3',
+      component: CrudTable3
     },
     {
       path: '/about',
